@@ -4,7 +4,7 @@ Este repositório contém os arquivos utilizados na disciplina **DEC001182 - Pro
 
 ## Links Úteis
 
-- [Curso de Ciência da Computação](https://www.uesc.br/cursos/graduacao/ciencia_da_computacao/)
+- [Curso de Ciência da Computação](https://colcic.uesc.br/)
 - [Universidade Estadual de Santa Cruz (Uesc)](https://www.uesc.br/)
 
 ## Contato
