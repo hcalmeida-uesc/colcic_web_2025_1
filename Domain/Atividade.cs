@@ -4,9 +4,9 @@ namespace ddd_project.Domain;
 
 public class Atividade
 {
-   public string titulo;
-   public int ch;
-   public string descricao;
-   public string periodo;
+   public string titulo { get; set; }
+   public int ch { get; set; }
+   public string descricao { get; set; }
+   public string periodo { get; set; }
 }
 
