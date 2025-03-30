@@ -1,3 +1,5 @@
+using Asp.Versioning;
+using ddd_project.API.Configuration;
 using ddd_project.App.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +17,23 @@ builder.Services.AddSingleton<IAlunoService, AlunoService>();
 
 
 builder.Services.AddControllers();
+
+// Add API versioning
+builder.Services.AddApiVersioning(options =>
+{
+    options.ReportApiVersions = true;
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.DefaultApiVersion = new ApiVersion(0, 1);
+})
+.AddApiExplorer(
+    options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
+
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
 builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
@@ -24,7 +42,15 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(
+        options =>
+        {
+            var descriptions = app.DescribeApiVersions();
+            foreach (var description in descriptions)
+            {
+                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+            }
+        });
 }
 
 app.UseHttpsRedirection();

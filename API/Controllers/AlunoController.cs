@@ -1,14 +1,15 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-
+using Asp.Versioning;
 using ddd_project.App.Services;
 using ddd_project.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace ddd_project.Controllers
 {
-    [Route("api/v0.1/[controller]")]
     [ApiController]
+    [ApiVersion("0.1")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
         private readonly IAlunoService _alunoService;
