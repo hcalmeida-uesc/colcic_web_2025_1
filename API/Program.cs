@@ -1,6 +1,8 @@
+using App.Services;
 using Asp.Versioning;
 using ddd_project.API.Configuration;
 using ddd_project.App.Services;
+using ddd_project.Domain;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +14,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Transient: o objeto é criado toda vez que é solicitado
 // Scoped: o objeto é criado uma vez por requisição HTTP
 builder.Services.AddSingleton<IAlunoService, AlunoService>();
+builder.Services.AddSingleton<IAtividadeService, AtividadeService>();
 //builder.Services.AddTransient<IAlunoService, AlunoService>();
 //builder.Services.AddScoped<IAlunoService, AlunoService>();
 
