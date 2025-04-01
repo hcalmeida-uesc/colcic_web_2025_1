@@ -3,9 +3,7 @@ using ddd_project.Domain;
 
 namespace ddd_project.App.Services;
 
-public interface IAlunoService
+public interface IAlunoService: ICRUD<Aluno>, IAlunoAtividadeService
 {
-   ICollection<Aluno> GetAllAlunos();
-   Aluno AssociarAtividade(Aluno aluno, Atividade atividade, int? ch);
-   ICollection<Atividade> GetAtividadesByAluno();
+   ICollection<Atividade> GetAtividades();
 }

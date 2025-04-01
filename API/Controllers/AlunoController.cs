@@ -21,7 +21,7 @@ namespace ddd_project.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<Aluno>> GetAllAlunos()
         {
-            var alunos = _alunoService.GetAllAlunos();
+            var alunos = _alunoService.GetAll();
             return Ok(alunos);
         }
 
@@ -29,13 +29,14 @@ namespace ddd_project.Controllers
         [Route("{matricula}/atividade")]
         public Aluno AssociarAtividade(string matricula, [FromBody] Atividade atividade, int? ch = null)
         {
-            var aluno = _alunoService.GetAllAlunos().FirstOrDefault(a => a.Matricula == matricula);
+            var aluno = _alunoService.GetAll().FirstOrDefault(a => a.Matricula == matricula);
             if (aluno == null)
             {
                 return null; // or throw an exception
             }
+            _alunoService.AssociarAlunoAtividade(aluno, atividade, ch);
 
-            return _alunoService.AssociarAtividade(aluno, atividade, ch);
+            return _alunoService.GetAll().FirstOrDefault(a => a.Matricula == matricula);
         }
 
     }

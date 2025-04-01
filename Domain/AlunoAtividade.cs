@@ -16,10 +16,13 @@ public class AlunoAtividade
       Ch = atividade.Ch;
    }
 
-   public AlunoAtividade(Aluno aluno, Atividade atividade, int ch)
+   public AlunoAtividade(Aluno aluno, Atividade atividade, int ch):this(aluno, atividade)
    {
-      Aluno = aluno ?? throw new ArgumentNullException(nameof(aluno), "Aluno não pode ser nulo.");
-      Atividade = atividade ?? throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
       Ch = ch;
+   }
+
+   public void AssociarAtividade(Aluno aluno, Atividade atividade, int? ch)
+   {
+      aluno.AssociarAtividade(atividade, ch);
    }
 }

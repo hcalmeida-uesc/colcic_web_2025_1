@@ -19,29 +19,29 @@ public class AlunoService : IAlunoService
       };
    }
 
-   public Aluno AssociarAtividade(Aluno aluno, Atividade atividade, int? ch)
+
+   public void AssociarAlunoAtividade(string matricula, Atividade atividade, int? ch)
    {
-      if (aluno == null)
-         throw new ArgumentNullException(nameof(aluno), "Aluno não pode ser nulo.");
-      if (atividade == null)
-         throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
-      
-      if (aluno.Atividades == null)
-         aluno.Atividades = new List<Atividade>();
+      var alunoLocal = _alunos.Where(a => a.Matricula == matricula).FirstOrDefault();
+      if (alunoLocal == null)
+      {
+         throw new ArgumentException("Aluno não encontrado.");
+      }
+      alunoLocal.AssociarAtividade(atividade, ch);
 
-      aluno.Atividades.Add(atividade);
-
-      return aluno;
    }
 
-   public ICollection<Aluno> GetAllAlunos()
+   public void AssociarAlunoAtividade(Aluno aluno, Atividade atividade, int? ch)
    {
-      return _alunos;
+      AssociarAlunoAtividade(aluno.Matricula, atividade, ch);
+   }
+   public ICollection<Aluno> GetAll()
+   {
+      return _alunos.ToList();
    }
 
-   public ICollection<Atividade> GetAtividadesByAluno()
+   public ICollection<Atividade> GetAtividades()
    {
-      // LINQ query to get all activities from all students
-       return _alunos.SelectMany(a => a.Atividades).ToList();
+      throw new NotImplementedException();
    }
 }
