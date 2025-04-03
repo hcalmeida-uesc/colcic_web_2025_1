@@ -1,6 +1,7 @@
 using Asp.Versioning;
 using ddd_project.App.Services;
 using ddd_project.Domain;
+using ddd_project.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,12 +18,12 @@ namespace API.Controllers
             _atividadeService = atividadeService;
         }
 
-        [HttpGet]
-        public ActionResult<Atividade> GetAtividade()
-        {
-            var atividade = _atividadeService.GetAtividade();
-            return Ok(atividade);
-        }
+        // [HttpGet]
+        // public ActionResult<Atividade> GetAll()
+        // {
+        //     var atividade = _atividadeService.GetAll();
+        //     return Ok(atividade);
+        // }
         
     }
 }

@@ -1,0 +1,63 @@
+   public List<Aluno> _alunos { get; }
+   public List<Atividade> _atividades { get; }
+   public List<AlunoAtividade> _alunosAtividades { get; }
+
+   public MemDatabase(){
+      _alunos = new List<Aluno>
+      {
+         new Aluno { Id = 11, Nome = "João Silva", Matricula = "20251001" },
+         new Aluno { Id = 12, Nome = "Maria Oliveira", Matricula = "20251002" },
+         new Aluno { Id = 13, Nome = "Carlos Santos", Matricula = "20251003" },
+         new Aluno { Id = 14, Nome = "Ana Costa", Matricula = "20251004" },
+
+      };
+
+      _atividades = new List<Atividade>{
+         new Atividade { Id = 21, Titulo = "Atividade 1", Descricao = "Descrição da Atividade 1", Ch = 60, Periodo = "2023.1" },
+         new Atividade { Id = 22, Titulo = "Atividade 2", Descricao = "Descrição da Atividade 2", Ch = 45, Periodo = "2023.2" },
+         new Atividade { Id = 23, Titulo = "Atividade 3", Descricao = "Descrição da Atividade 3", Ch = 30, Periodo = "2024.1" }
+      };
+      _alunosAtividades = new List<AlunoAtividade>();
+   }
+
+   public void Add<T>(T entity)
+   {
+      if (entity is Aluno aluno)
+      {
+         aluno.Id = _alunos.Select(a => a.Id).Max() + 1;
+         _alunos.Add(aluno);
+      }
+      else if (entity is Atividade atividade)
+      {
+         atividade.Id = _atividades.Select(a => a.Id).Max() + 1;
+         _atividades.Add(atividade);
+      }
+      else if (entity is AlunoAtividade alunoAtividade)
+      {
+         _alunosAtividades.Add(alunoAtividade);
+      }
+      else
+      {
+         throw new ArgumentException("Tipo de entidade não suportado.");
+      }
+   }
+
+   public T GetById<T>(int id)
+   {
+      throw new NotImplementedException();
+   }
+
+   public ICollection<T> GetAll<T>()
+   {
+      throw new NotImplementedException();
+   }
+
+   public void Update<T>(T entity)
+   {
+      throw new NotImplementedException();
+   }
+
+   public void Delete<T>(int id)
+   {
+      throw new NotImplementedException();
+   }

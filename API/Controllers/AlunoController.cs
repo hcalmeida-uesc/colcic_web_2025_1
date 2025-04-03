@@ -1,9 +1,8 @@
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Asp.Versioning;
 using ddd_project.App.Services;
-using ddd_project.Domain;
-using Microsoft.AspNetCore.Http.HttpResults;
+using ddd_project.Domain.Entities;
+using ddd_project.Domain.Contracts;
 
 namespace ddd_project.Controllers
 {
@@ -13,31 +12,33 @@ namespace ddd_project.Controllers
     public class AlunoController : ControllerBase
     {
         private readonly IAlunoService _alunoService;
-        public AlunoController(IAlunoService alunoService)
+        private readonly IAlunoRepository _alunoRepository;
+        public AlunoController(IAlunoService alunoService, IAlunoRepository alunoRepository)
         {
+            _alunoRepository = alunoRepository;
             _alunoService = alunoService;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Aluno>> GetAllAlunos()
         {
-            var alunos = _alunoService.GetAll();
+            var alunos = _alunoRepository.GetAll();
             return Ok(alunos);
         }
 
-        [HttpPut]
-        [Route("{matricula}/atividade")]
-        public Aluno AssociarAtividade(string matricula, [FromBody] Atividade atividade, int? ch = null)
-        {
-            var aluno = _alunoService.GetAll().FirstOrDefault(a => a.Matricula == matricula);
-            if (aluno == null)
-            {
-                return null; // or throw an exception
-            }
-            _alunoService.AssociarAlunoAtividade(aluno, atividade, ch);
+        // [HttpPut]
+        // [Route("{matricula}/atividade")]
+        // public Aluno AssociarAtividade(string matricula, [FromBody] Atividade atividade, int? ch = null)
+        // {
+        //     var aluno = _alunoService.GetAll().FirstOrDefault(a => a.Matricula == matricula);
+        //     if (aluno == null)
+        //     {
+        //         return null; // or throw an exception
+        //     }
+        //     _alunoService.AssociarAlunoAtividade(aluno, atividade, ch);
 
-            return _alunoService.GetAll().FirstOrDefault(a => a.Matricula == matricula);
-        }
+        //     return aluno;
+        // }
 
     }
     

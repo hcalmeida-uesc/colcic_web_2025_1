@@ -1,8 +1,11 @@
+using System.Text.Json.Serialization;
 using App.Services;
 using Asp.Versioning;
 using ddd_project.API.Configuration;
 using ddd_project.App.Services;
 using ddd_project.Domain;
+using ddd_project.Domain.Contracts;
+using ddd_project.Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,11 +18,18 @@ var builder = WebApplication.CreateBuilder(args);
 // Scoped: o objeto é criado uma vez por requisição HTTP
 builder.Services.AddSingleton<IAlunoService, AlunoService>();
 builder.Services.AddSingleton<IAtividadeService, AtividadeService>();
+builder.Services.AddSingleton<IAlunoRepository, AlunoRepository>();
 //builder.Services.AddTransient<IAlunoService, AlunoService>();
 //builder.Services.AddScoped<IAlunoService, AlunoService>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.PropertyNamingPolicy = null; // Preserve property names
+        options.JsonSerializerOptions.DictionaryKeyPolicy = null; // Preserve dictionary key names
+        options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve;
+    });
 
 // Add API versioning
 builder.Services.AddApiVersioning(options =>

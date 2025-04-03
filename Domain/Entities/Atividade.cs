@@ -1,10 +1,10 @@
 using System;
 
-namespace ddd_project.Domain;
+namespace ddd_project.Domain.Entities;
 
 public class Atividade
 {
-   public int Id { get; set; }
+   public Guid Id { get; set; }
    public string Titulo { get; set; }
    public int Ch { get; set; }
    public string Descricao { get; set; }

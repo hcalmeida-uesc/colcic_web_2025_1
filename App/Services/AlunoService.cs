@@ -1,43 +1,19 @@
 using System;
 using ddd_project.Domain;
+using ddd_project.Domain.Entities;
 
 namespace ddd_project.App.Services;
 
 public class AlunoService : IAlunoService
 {
-   private readonly List<Aluno> _alunos;
-
-   public AlunoService()
+   public void AssociarAlunoAtividade(Aluno aluno, Atividade atividade, int? ch)
    {
-      _alunos = new List<Aluno>
-      {
-         new Aluno { Nome = "João Silva", Matricula = "20251001" },
-         new Aluno { Nome = "Maria Oliveira", Matricula = "20251002" },
-         new Aluno { Nome = "Carlos Santos", Matricula = "20251003" },
-         new Aluno { Nome = "Ana Costa", Matricula = "20251004" },
-
-      };
+      throw new NotImplementedException();
    }
-
 
    public void AssociarAlunoAtividade(string matricula, Atividade atividade, int? ch)
    {
-      var alunoLocal = _alunos.Where(a => a.Matricula == matricula).FirstOrDefault();
-      if (alunoLocal == null)
-      {
-         throw new ArgumentException("Aluno não encontrado.");
-      }
-      alunoLocal.AssociarAtividade(atividade, ch);
-
-   }
-
-   public void AssociarAlunoAtividade(Aluno aluno, Atividade atividade, int? ch)
-   {
-      AssociarAlunoAtividade(aluno.Matricula, atividade, ch);
-   }
-   public ICollection<Aluno> GetAll()
-   {
-      return _alunos.ToList();
+      throw new NotImplementedException();
    }
 
    public ICollection<Atividade> GetAtividades()
