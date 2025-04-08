@@ -4,6 +4,7 @@ using Asp.Versioning;
 using ddd_project.App.Services;
 using ddd_project.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
+using ddd_project.Domain.Contracts;
 
 namespace ddd_project.Controllers
 {
@@ -13,15 +14,19 @@ namespace ddd_project.Controllers
     public class AlunoController : ControllerBase
     {
         private readonly IAlunoService _alunoService;
-        public AlunoController(IAlunoService alunoService)
+        private readonly IAlunoRepository _alunoRepository;
+        public AlunoController(
+            IAlunoService alunoService,
+            IAlunoRepository alunoRepository)
         {
             _alunoService = alunoService;
+            _alunoRepository = alunoRepository;
         }
 
         [HttpGet]
         public ActionResult<IEnumerable<Aluno>> GetAllAlunos()
         {
-            var alunos = _alunoService.GetAllAlunos();
+            var alunos = _alunoRepository.GetAll();
             return Ok(alunos);
         }
 
