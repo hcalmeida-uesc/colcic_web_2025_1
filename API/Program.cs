@@ -3,10 +3,16 @@ using Asp.Versioning;
 using ddd_project.API.Configuration;
 using ddd_project.App.Services;
 using ddd_project.Domain;
+using Microsoft.EntityFrameworkCore;
+using ddd_project.Infrastructure.ORM;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ColcicExtensaoContext>(options =>
+                options.UseSqlite("Data Source=colcic_extensao.db")
+            );
 
 
 // ciclo de vida dos serviços
