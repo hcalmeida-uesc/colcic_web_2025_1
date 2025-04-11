@@ -6,7 +6,9 @@ namespace ddd_project.Domain;
 public class AlunoAtividade
 {
    public Aluno Aluno { get; set; }
+   public Guid AlunoId { get; set; }
    public Atividade Atividade { get; set; }
+   public Guid AtividadeId { get; set; }
    public int Ch { get; set; }
 
    public AlunoAtividade(Aluno aluno, Atividade atividade)

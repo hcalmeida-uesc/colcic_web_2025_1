@@ -27,7 +27,7 @@ public class AlunoService : IAlunoService
          throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
       
       if (aluno.Atividades == null)
-         aluno.Atividades = new List<Atividade>();
+         throw new ArgumentNullException(nameof(aluno.Atividades), "Atividades não podem ser nulas.");
 
       aluno.Atividades.Add(atividade);
 

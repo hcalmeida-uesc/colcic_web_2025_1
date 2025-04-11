@@ -1,13 +1,20 @@
 using System;
 using ddd_project.Domain;
 using ddd_project.Domain.Contracts;
+using ddd_project.Infrastructure.ORM;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Repositories;
 
 public class AlunoRepository : IAlunoRepository
 {
-   DbContext _context;
+   private readonly ColcicExtensaoContext _context;
+
+   public AlunoRepository(ColcicExtensaoContext context)
+   {
+      _context = context;
+   }
+
    public Aluno Add(Aluno entity)
    {
       throw new NotImplementedException();

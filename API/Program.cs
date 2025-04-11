@@ -5,6 +5,8 @@ using ddd_project.App.Services;
 using ddd_project.Domain;
 using Microsoft.EntityFrameworkCore;
 using ddd_project.Infrastructure.ORM;
+using ddd_project.Domain.Contracts;
+using Infrastructure.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,6 +25,7 @@ builder.Services.AddSingleton<IAlunoService, AlunoService>();
 builder.Services.AddSingleton<IAtividadeService, AtividadeService>();
 //builder.Services.AddTransient<IAlunoService, AlunoService>();
 //builder.Services.AddScoped<IAlunoService, AlunoService>();
+builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
 
 
 builder.Services.AddControllers();
