@@ -492,3 +492,5 @@ $RECYCLE.BIN/
 *.s3db
 *.sqlite-shm
 *.sqlite-wal
+*.db-shm
+*.db-wal
