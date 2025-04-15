@@ -47,7 +47,7 @@ public class AlunoRepository : IAlunoRepository
       throw new NotImplementedException();
    }
 
-   public Aluno? AddAtividade(Guid alunoId, Guid atividadeId)
+   public Aluno? AddAtividade(Guid alunoId, Guid atividadeId, int? ch = 0)
    {
       var aluno = _context.Alunos.FirstOrDefault(a => a.Id == alunoId);
       var atividade = _context.Atividades.FirstOrDefault(a => a.Id == atividadeId);
@@ -56,6 +56,13 @@ public class AlunoRepository : IAlunoRepository
          return null;
 
       aluno.Atividades.Add(atividade);
+      _context.SaveChanges();
+
+      var alunoatividade = _context.AlunoAtividades.FirstOrDefault(a => a.AtividadeId == atividadeId && a.AlunoId == alunoId);
+      
+      alunoatividade.Ch = (int)ch;
+
+      _context.AlunoAtividades.Update(alunoatividade);
       _context.SaveChanges();
 
       return aluno;

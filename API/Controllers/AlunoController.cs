@@ -40,7 +40,7 @@ namespace ddd_project.Controllers
         [Route("atividade")]
         public ActionResult<Aluno> AssociarAtividade(Guid alunoId, Guid atividadeId, int? ch = null)
         {
-            var aluno = _alunoRepository.AddAtividade(alunoId, atividadeId);
+            var aluno = _alunoRepository.AddAtividade(alunoId, atividadeId, ch);
             if (aluno == null)
                 return NotFound("Aluno ou Atividade não encontrados.");
 
