@@ -2,11 +2,11 @@ using App.Services;
 using Asp.Versioning;
 using ddd_project.API.Configuration;
 using ddd_project.App.Services;
-using ddd_project.Domain;
 using Microsoft.EntityFrameworkCore;
 using ddd_project.Infrastructure.ORM;
 using ddd_project.Domain.Contracts;
-using Infrastructure.Repositories;
+using ddd_project.Infrastructure.Repositories;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,9 +26,11 @@ builder.Services.AddSingleton<IAtividadeService, AtividadeService>();
 //builder.Services.AddTransient<IAlunoService, AlunoService>();
 //builder.Services.AddScoped<IAlunoService, AlunoService>();
 builder.Services.AddScoped<IAlunoRepository, AlunoRepository>();
+builder.Services.AddScoped<IAtividadeRepository, AtividadeRepository>();
 
 
-builder.Services.AddControllers();
+builder.Services.AddControllers().AddJsonOptions(x =>
+   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
 
 // Add API versioning
 builder.Services.AddApiVersioning(options =>

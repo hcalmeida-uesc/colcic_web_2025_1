@@ -25,7 +25,10 @@ public class ColcicExtensaoContext : DbContext
     protected override void OnModelCreating(ModelBuilder modelBuilder){
         base.OnModelCreating(modelBuilder);
         modelBuilder.Entity<Aluno>().ToTable("Alunos").HasKey(a => a.Id);
-        modelBuilder.Entity<Aluno>().HasMany(a => a.Atividades).WithMany(a => a.Alunos).UsingEntity<AlunoAtividade>(j => j.ToTable("AlunosAtividades"));
+        modelBuilder.Entity<Aluno>().HasMany(a => a.Atividades).WithMany(a => a.Alunos).UsingEntity<AlunoAtividade>(
+            l => l.HasOne(a => a.Atividade).WithMany(e => e.AlunoAtividades).HasForeignKey(a => a.AtividadeId),
+            r => r.HasOne(a => a.Aluno).WithMany(e => e.AlunoAtividades).HasForeignKey(a => a.AlunoId)
+        );
         modelBuilder.Entity<Aluno>().HasIndex(a => a.Matricula).IsUnique();
 
         modelBuilder.Entity<Atividade>().ToTable("Atividades").HasKey(a => a.Id);

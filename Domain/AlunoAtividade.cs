@@ -11,17 +11,17 @@ public class AlunoAtividade
    public Guid AtividadeId { get; set; }
    public int Ch { get; set; }
 
-   public AlunoAtividade(Aluno aluno, Atividade atividade)
-   {
-      Aluno = aluno ?? throw new ArgumentNullException(nameof(aluno), "Aluno não pode ser nulo.");
-      Atividade = atividade ?? throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
-      Ch = atividade.Ch;
-   }
+   // public AlunoAtividade(Aluno aluno, Atividade atividade)
+   // {
+   //    Aluno = aluno ?? throw new ArgumentNullException(nameof(aluno), "Aluno não pode ser nulo.");
+   //    Atividade = atividade ?? throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
+   //    Ch = atividade.Ch;
+   // }
 
-   public AlunoAtividade(Aluno aluno, Atividade atividade, int ch)
-   {
-      Aluno = aluno ?? throw new ArgumentNullException(nameof(aluno), "Aluno não pode ser nulo.");
-      Atividade = atividade ?? throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
-      Ch = ch;
-   }
+   // public AlunoAtividade(Aluno aluno, Atividade atividade, int ch)
+   // {
+   //    Aluno = aluno ?? throw new ArgumentNullException(nameof(aluno), "Aluno não pode ser nulo.");
+   //    Atividade = atividade ?? throw new ArgumentNullException(nameof(atividade), "Atividade não pode ser nula.");
+   //    Ch = ch;
+   // }
 }

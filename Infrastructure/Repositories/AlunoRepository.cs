@@ -4,7 +4,7 @@ using ddd_project.Domain.Contracts;
 using ddd_project.Infrastructure.ORM;
 using Microsoft.EntityFrameworkCore;
 
-namespace Infrastructure.Repositories;
+namespace ddd_project.Infrastructure.Repositories;
 
 public class AlunoRepository : IAlunoRepository
 {
@@ -17,7 +17,9 @@ public class AlunoRepository : IAlunoRepository
 
    public Aluno Add(Aluno entity)
    {
-      throw new NotImplementedException();
+      _context.Alunos.Add(entity);
+      _context.SaveChanges();
+      return entity;
    }
 
    public Aluno Delete(Guid id)
@@ -27,7 +29,7 @@ public class AlunoRepository : IAlunoRepository
 
    public ICollection<Aluno> GetAll()
    {
-      throw new NotImplementedException();
+      return _context.Alunos.Include(a => a.Atividades).ToList();
    }
 
    public ICollection<Aluno> GetAlunosByAtividade(Guid atividadeId)
@@ -43,5 +45,19 @@ public class AlunoRepository : IAlunoRepository
    public Aluno Update(Aluno entity)
    {
       throw new NotImplementedException();
+   }
+
+   public Aluno? AddAtividade(Guid alunoId, Guid atividadeId)
+   {
+      var aluno = _context.Alunos.FirstOrDefault(a => a.Id == alunoId);
+      var atividade = _context.Atividades.FirstOrDefault(a => a.Id == atividadeId);
+
+      if (aluno == null || atividade == null)
+         return null;
+
+      aluno.Atividades.Add(atividade);
+      _context.SaveChanges();
+
+      return aluno;
    }
 }

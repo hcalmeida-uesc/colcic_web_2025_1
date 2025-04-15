@@ -10,7 +10,7 @@ public class Atividade
    public string Descricao { get; set; }
    public string Periodo { get; set; }
    public List<Aluno> Alunos { get; } =[];
-   public List<AlunoAtividade> AlunoAtividade { get; } =[];
+   public List<AlunoAtividade> AlunoAtividades { get; } =[];
 
 }
 

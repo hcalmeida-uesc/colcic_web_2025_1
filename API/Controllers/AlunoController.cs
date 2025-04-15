@@ -13,13 +13,9 @@ namespace ddd_project.Controllers
     [Route("api/v{version:apiVersion}/[controller]")]
     public class AlunoController : ControllerBase
     {
-        private readonly IAlunoService _alunoService;
         private readonly IAlunoRepository _alunoRepository;
-        public AlunoController(
-            IAlunoService alunoService,
-            IAlunoRepository alunoRepository)
+        public AlunoController(IAlunoRepository alunoRepository)
         {
-            _alunoService = alunoService;
             _alunoRepository = alunoRepository;
         }
 
@@ -30,17 +26,25 @@ namespace ddd_project.Controllers
             return Ok(alunos);
         }
 
-        [HttpPut]
-        [Route("{matricula}/atividade")]
-        public Aluno AssociarAtividade(string matricula, [FromBody] Atividade atividade, int? ch = null)
+        [HttpPost]
+        public ActionResult<Aluno> Post([FromBody] Aluno aluno)
         {
-            var aluno = _alunoService.GetAllAlunos().FirstOrDefault(a => a.Matricula == matricula);
             if (aluno == null)
-            {
-                return null; // or throw an exception
-            }
+                return BadRequest("Aluno não pode ser nulo.");
 
-            return _alunoService.AssociarAtividade(aluno, atividade, ch);
+            var alunoSalvo = _alunoRepository.Add(aluno);
+            return CreatedAtAction(nameof(GetAllAlunos), new { id = alunoSalvo.Id }, alunoSalvo);
+        }
+
+        [HttpPut]
+        [Route("atividade")]
+        public ActionResult<Aluno> AssociarAtividade(Guid alunoId, Guid atividadeId, int? ch = null)
+        {
+            var aluno = _alunoRepository.AddAtividade(alunoId, atividadeId);
+            if (aluno == null)
+                return NotFound("Aluno ou Atividade não encontrados.");
+
+            return Ok(aluno);
         }
 
     }
