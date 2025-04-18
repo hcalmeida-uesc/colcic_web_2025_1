@@ -38,7 +38,7 @@ namespace ddd_project.Controllers
 
         [HttpPut]
         [Route("atividade")]
-        public ActionResult<Aluno> AssociarAtividade(Guid alunoId, Guid atividadeId, int? ch = null)
+        public ActionResult<Aluno> AssociarAtividade(Guid alunoId, Guid atividadeId, int ch = 0)
         {
             var aluno = _alunoRepository.AddAtividade(alunoId, atividadeId, ch);
             if (aluno == null)

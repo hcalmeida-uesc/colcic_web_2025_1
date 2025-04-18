@@ -39,7 +39,9 @@ public class AlunoRepository : IAlunoRepository
 
    public Aluno GetById(Guid id)
    {
-      throw new NotImplementedException();
+      return _context.Alunos
+         .Include(a => a.Atividades)
+         .FirstOrDefault(a => a.Id == id) ?? throw new Exception("Aluno não encontrado.");
    }
 
    public Aluno Update(Aluno entity)
@@ -47,7 +49,26 @@ public class AlunoRepository : IAlunoRepository
       throw new NotImplementedException();
    }
 
-   public Aluno? AddAtividade(Guid alunoId, Guid atividadeId, int? ch = 0)
+   private AlunoAtividade? GetAlunoAtividade(Guid alunoId, Guid atividadeId)
+   {
+      return _context.AlunoAtividades
+         .FirstOrDefault(a => a.AlunoId == alunoId && a.AtividadeId == atividadeId);
+   }
+
+   private AlunoAtividade? SetChAlunoAtividade(Guid alunoId, Guid atividadeId, int ch)
+   {
+      var alunoAtividade = GetAlunoAtividade(alunoId, atividadeId);
+
+      if (alunoAtividade == null)
+         return null;
+
+      alunoAtividade.Ch = ch;
+      _context.AlunoAtividades.Update(alunoAtividade);
+      _context.SaveChanges();
+
+      return alunoAtividade;
+   }
+   public Aluno? AddAtividade(Guid alunoId, Guid atividadeId, int ch = 0)
    {
       var aluno = _context.Alunos.FirstOrDefault(a => a.Id == alunoId);
       var atividade = _context.Atividades.FirstOrDefault(a => a.Id == atividadeId);
@@ -58,13 +79,10 @@ public class AlunoRepository : IAlunoRepository
       aluno.Atividades.Add(atividade);
       _context.SaveChanges();
 
-      var alunoatividade = _context.AlunoAtividades.FirstOrDefault(a => a.AtividadeId == atividadeId && a.AlunoId == alunoId);
-      
-      alunoatividade.Ch = (int)ch;
-
-      _context.AlunoAtividades.Update(alunoatividade);
-      _context.SaveChanges();
-
+      ch = ch == 0 ? atividade.Ch : ch;
+      if(SetChAlunoAtividade(alunoId, atividadeId, ch) == null)
+         return null;
+         
       return aluno;
    }
 }
