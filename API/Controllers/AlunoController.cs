@@ -5,6 +5,7 @@ using ddd_project.App.Services;
 using ddd_project.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
 using ddd_project.Domain.Contracts;
+using ddd_project.API.Extensions;
 
 namespace ddd_project.Controllers
 {
@@ -20,10 +21,11 @@ namespace ddd_project.Controllers
         }
 
         [HttpGet]
-        public ActionResult<IEnumerable<Aluno>> GetAllAlunos()
+        public ActionResult<ICollection<Aluno>> GetAllAlunos()
         {
             var alunos = _alunoRepository.GetAll();
-            return Ok(alunos);
+
+            return this.MapResult(alunos);
         }
 
         [HttpPost]
@@ -33,7 +35,7 @@ namespace ddd_project.Controllers
                 return BadRequest("Aluno não pode ser nulo.");
 
             var alunoSalvo = _alunoRepository.Add(aluno);
-            return CreatedAtAction(nameof(GetAllAlunos), new { id = alunoSalvo.Id }, alunoSalvo);
+            return CreatedAtAction(nameof(GetAllAlunos), alunoSalvo);
         }
 
         [HttpPut]

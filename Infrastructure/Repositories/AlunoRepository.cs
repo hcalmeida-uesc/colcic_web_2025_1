@@ -1,6 +1,7 @@
 using System;
 using ddd_project.Domain;
 using ddd_project.Domain.Contracts;
+using ddd_project.Domain.ResultPattern;
 using ddd_project.Infrastructure.ORM;
 using Microsoft.EntityFrameworkCore;
 
@@ -15,11 +16,11 @@ public class AlunoRepository : IAlunoRepository
       _context = context;
    }
 
-   public Aluno Add(Aluno entity)
+   public Result<Aluno> Add(Aluno entity)
    {
       _context.Alunos.Add(entity);
       _context.SaveChanges();
-      return entity;
+      return Result<Aluno>.Success(entity);
    }
 
    public Aluno Delete(Guid id)
