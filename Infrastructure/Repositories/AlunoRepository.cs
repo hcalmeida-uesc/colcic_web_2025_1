@@ -25,7 +25,7 @@ public class AlunoRepository : IAlunoRepository
 
    public Aluno Add(Aluno entity)
    {
-       
+       _context.Alunos.Add(entity);
       _context.SaveChanges();
       return entity;
    }

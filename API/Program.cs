@@ -7,6 +7,9 @@ using ddd_project.Infrastructure.ORM;
 using ddd_project.Domain.Contracts;
 using ddd_project.Infrastructure.Repositories;
 using System.Text.Json.Serialization;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +18,46 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<ColcicExtensaoContext>(options =>
                 options.UseSqlite("Data Source=colcic_extensao.db")
             );
+        
+// Habilitar logs detalhados de autenticação
+builder.Services.AddLogging(logging =>
+{
+    logging.AddConsole();
+    logging.AddDebug();
+    logging.SetMinimumLevel(LogLevel.Debug);
+});
 
+// Habilitar informações detalhadas de erros do IdentityModel
+Microsoft.IdentityModel.Logging.IdentityModelEventSource.ShowPII = true;
+
+var jwtKey = builder.Configuration["Jwt:Key"];
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+
+// Verificação básica de configuração
+if (string.IsNullOrEmpty(jwtKey) || string.IsNullOrEmpty(jwtIssuer))
+{
+    throw new InvalidOperationException("JWT Key ou Issuer não configurados no appsettings.json");
+}
+
+// Configuração de autenticação JWT simplificada
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuer = true,
+        ValidateAudience = true,
+        ValidateLifetime = true,
+        ValidateIssuerSigningKey = true,
+        ValidIssuer = jwtIssuer,
+        ValidAudience = jwtIssuer,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtKey))
+    };
+});
 
 // ciclo de vida dos serviços
 // Singleton: o objeto se mantém durante toda a execução da aplicação
@@ -48,7 +90,36 @@ builder.Services.AddApiVersioning(options =>
 
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.ConfigureOptions<ConfigureSwaggerOptions>();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    options.AddSecurityDefinition("Bearer", new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+    {
+        Name = "Authorization",
+        Type = Microsoft.OpenApi.Models.SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT",
+        In = Microsoft.OpenApi.Models.ParameterLocation.Header,
+        Description = "Insira o token JWT no campo abaixo. Exemplo: Bearer {seu token}"
+    });
+
+    options.AddSecurityRequirement(new Microsoft.OpenApi.Models.OpenApiSecurityRequirement
+    {
+        {
+            new Microsoft.OpenApi.Models.OpenApiSecurityScheme
+            {
+                Reference = new Microsoft.OpenApi.Models.OpenApiReference
+                {
+                    Type = Microsoft.OpenApi.Models.ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
+});
+
+builder.Logging.AddConsole();
+builder.Logging.SetMinimumLevel(LogLevel.Debug);
 
 var app = builder.Build();
 
@@ -68,6 +139,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

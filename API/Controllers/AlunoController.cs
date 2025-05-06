@@ -6,6 +6,7 @@ using ddd_project.Domain;
 using Microsoft.AspNetCore.Http.HttpResults;
 using ddd_project.Domain.Contracts;
 using ddd_project.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace ddd_project.Controllers
 {
@@ -29,6 +30,7 @@ namespace ddd_project.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public ActionResult<Aluno> Post([FromBody] Aluno aluno)
         {
             if (aluno == null)
