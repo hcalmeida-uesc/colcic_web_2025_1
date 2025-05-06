@@ -25,7 +25,7 @@ namespace ddd_project.Controllers
         {
             var alunos = _alunoRepository.GetAll();
 
-            return this.MapResult(alunos);
+            return Ok(alunos.ToArray());
         }
 
         [HttpPost]

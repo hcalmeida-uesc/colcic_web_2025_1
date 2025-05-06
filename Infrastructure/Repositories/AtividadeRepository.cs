@@ -1,6 +1,7 @@
 using System;
 using ddd_project.Domain;
 using ddd_project.Domain.Contracts;
+using ddd_project.Domain.ResultPattern;
 using ddd_project.Infrastructure.ORM;
 using Microsoft.EntityFrameworkCore;
 

@@ -16,11 +16,18 @@ public class AlunoRepository : IAlunoRepository
       _context = context;
    }
 
-   public Result<Aluno> Add(Aluno entity)
+   // public Result<Aluno> Add(Aluno entity)
+   // {
+   //    _context.Alunos.Add(entity);
+   //    _context.SaveChanges();
+   //    return Result<Aluno>.Success(entity);
+   // }
+
+   public Aluno Add(Aluno entity)
    {
-      _context.Alunos.Add(entity);
+       
       _context.SaveChanges();
-      return Result<Aluno>.Success(entity);
+      return entity;
    }
 
    public Aluno Delete(Guid id)

@@ -22,7 +22,7 @@ namespace API.Controllers
         public ActionResult<IEnumerable<Atividade>> GetAtividade()
         {
             var atividade = _atividadeRepository.GetAll();
-            return Ok(atividade);
+            return Ok(atividade.ToList());
         }
 
         [HttpPost]

@@ -30,7 +30,7 @@ builder.Services.AddScoped<IAtividadeRepository, AtividadeRepository>();
 
 
 builder.Services.AddControllers().AddJsonOptions(x =>
-   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.Preserve);
+   x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
 
 // Add API versioning
 builder.Services.AddApiVersioning(options =>

@@ -5,9 +5,9 @@ namespace ddd_project.Domain.Contracts;
 
 public interface IGenericRepository<T>
 {
-    public Result<ICollection<T>> GetAll();
-   public Result<T> GetById(Guid id);
-   public Result<T> Add(T entity);
-   public Result<T> Update(T entity);
-   public Result<T> Delete(Guid id);
+    public ICollection<T> GetAll();
+   public T GetById(Guid id);
+   public T Add(T entity);
+   public T Update(T entity);
+   public T Delete(Guid id);
 }
