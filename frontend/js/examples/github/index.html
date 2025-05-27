@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Dados do GitHub via API</title>
+</head>
+<style>
+   body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+   }
+   .form {
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      align-items: center;
+      justify-content: center;
+      font-family: Arial, sans-serif;
+   }
+
+
+</style>
+<body>
+   <h1>Buscar Perfil do GitHub</h1>
+   <div class="form">
+      <input id="usuario" placeholder="Digite um usuário do GitHub">
+      <button id="buscar">Buscar</button>
+   </div>
+   <div id="perfil"></div>
+
+   <script>
+      document.getElementById('buscar').addEventListener('click', async () => {
+         const usuario = document.getElementById('usuario').value;
+         if (!usuario) {
+            alert('Por favor, digite um usuário do GitHub.');
+            return;
+         }
+         const resposta = await fetch(`https://api.github.com/users/${usuario}`);
+         const dados = await resposta.json();
+
+         document.getElementById('perfil').innerHTML = `
+            <img src="${dados.avatar_url}" width="100">
+            <h2>${dados.name}</h2>
+            <p>${dados.bio || 'Sem bio'}</p>
+            <a href="${dados.html_url}" target="_blank">Ver perfil</a>
+         `;
+         });
+
+   </script>
+</body>
+</html>
