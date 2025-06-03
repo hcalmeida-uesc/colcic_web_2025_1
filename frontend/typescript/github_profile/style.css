@@ -1,0 +1,142 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #eef1f5;
+    color: #333;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start; /* Alinha ao topo para ver o conteúdo inicial se for longo */
+    min-height: 100vh;
+}
+
+.container {
+    background-color: #ffffff;
+    padding: 25px 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    width: 90%;
+    max-width: 700px;
+    text-align: center;
+}
+
+h1 {
+    color: #0056b3; /* Um azul mais escuro e profissional */
+    margin-bottom: 10px;
+}
+
+.container p:first-of-type { /* Estilo para o parágrafo de instrução */
+    margin-bottom: 20px;
+    color: #555;
+}
+
+.search-area {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    display: flex;
+    gap: 10px; /* Espaço entre o input e o botão */
+}
+
+#usernameInput {
+    flex-grow: 1; /* Faz o input ocupar o espaço restante */
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box; /* Garante que padding não aumente o tamanho total */
+}
+
+#searchButton {
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.2s ease;
+}
+
+#searchButton:hover {
+    background-color: #0056b3;
+}
+
+#searchButton:disabled {
+    background-color: #cccccc;
+    cursor: not-allowed;
+}
+
+.loading {
+    margin: 20px 0;
+    font-style: italic;
+    color: #555;
+    font-size: 1rem;
+}
+
+.error-message {
+    color: #d9534f; /* Vermelho para mensagens de erro */
+    background-color: #f2dede; /* Fundo rosa claro para destaque */
+    border: 1px solid #ebccd1; /* Borda sutil para o box de erro */
+    padding: 12px;
+    border-radius: 5px;
+    margin: 20px 0;
+    display: none; /* Começa oculto */
+    text-align: left;
+}
+
+.profile-card {
+    margin-top: 25px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    text-align: left;
+    background-color: #f9f9f9; /* Um fundo levemente diferente para o card */
+    display: none; /* Começa oculto até ter dados */
+    overflow: hidden; /* Para conter o float da imagem */
+}
+
+.profile-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%; /* Imagem redonda */
+    margin-right: 20px;
+    margin-bottom: 15px; /* Espaço abaixo da imagem se o texto for curto */
+    border: 4px solid #007bff; /* Borda azul na imagem */
+    float: left; /* Para o texto fluir ao lado da imagem */
+}
+
+.profile-card h2 {
+    color: #007bff;
+    margin-top: 0; /* Remove margem superior padrão de h2 para alinhar com a imagem */
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+}
+
+.profile-card p {
+    margin: 8px 0;
+    line-height: 1.6;
+    font-size: 0.95rem;
+    color: #444; /* Cor de texto um pouco mais escura para parágrafos */
+}
+
+.profile-card p strong {
+    color: #333; /* Destaque para os labels */
+    margin-right: 5px;
+}
+
+.profile-card a {
+    color: #007bff;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.profile-card a:hover {
+    text-decoration: underline;
+}
+
+/* Clearfix para o container do profile-card se o float da imagem causar problemas de layout */
+.profile-card::after {
+    content: "";
+    clear: both;
+    display: table;
+}

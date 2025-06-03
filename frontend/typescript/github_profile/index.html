@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil GitHub Dinâmico</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Visualizador de Perfil do GitHub</h1>
+        <p>Digite um nome de usuário do GitHub para ver suas informações.</p>
+
+        <div class="search-area">
+            <input type="text" id="usernameInput" placeholder="Ex: octocat, seu-usuario">
+            <button id="searchButton">Buscar Perfil</button>
+        </div>
+
+        <div id="loadingIndicator" class="loading" style="display: none;">Carregando...</div>
+        <div id="errorDisplay" class="error-message"></div>
+        <div id="profileOutput" class="profile-card">
+            </div>
+    </div>
+
+    <script type="module" src="dist/main.js"></script> </body>
+</html>
