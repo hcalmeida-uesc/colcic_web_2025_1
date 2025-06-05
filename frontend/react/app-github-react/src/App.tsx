@@ -1,35 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+// src/App.tsx
+import { useState } from 'react';
+import type { GitHubUserProfile } from './services/gitHubApiService';
+import { fetchGitHubUserProfile } from './services/gitHubApiService';
+import SearchForm from './components/SearchForm';
+import UserProfileCard from './components/UserProfileCard';
+import ErrorMessage from './components/ErrorMessage';
+import LoadingIndicator from './components/LoadingIndicator';
+import './style.css'; // Importar o CSS global
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [userProfile, setUserProfile] = useState<GitHubUserProfile | null>(null);
+    const [error, setError] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const handleSearch = async (username: string) => {
+        setIsLoading(true);
+        setUserProfile(null);
+        setError(null);
+
+        try {
+            const profile = await fetchGitHubUserProfile(username);
+            setUserProfile(profile);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError('Ocorreu um erro desconhecido.');
+            }
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    return (
+        <div className="container">
+            <h1>Visualizador de Perfil do GitHub com React</h1>
+            <p>Digite um nome de usuário do GitHub para ver suas informações.</p>
+
+            <SearchForm onSearch={handleSearch} isLoading={isLoading} />
+
+            {isLoading && <LoadingIndicator />}
+            {error && <ErrorMessage message={error} />}
+            {userProfile && !isLoading && <UserProfileCard user={userProfile} />}
+        </div>
+    );
 }
 
-export default App
+export default App;
